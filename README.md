@@ -87,9 +87,11 @@ Below are the available API endpoints for managing appointments:
 **GET /api/appointments**
 - Description: Get all appointments.
 - Authentication Required: Yes
+  
 **GET /api/appointments/{id}**
 - Description: Get a specific appointment by its ID.
 - Authentication Required: Yes
+  
 **POST /api/appointments**
 - Description: Create a new appointment.
 - Request Body:
@@ -102,13 +104,16 @@ Below are the available API endpoints for managing appointments:
 }
 ```
 - Authentication Required: Yes
+  
 **PUT /api/appointments/{id}**
 - Description: Update an existing appointment by its ID.
 - Request Body: Same as POST /api/appointments.
 - Authentication Required: Yes
+  
 **DELETE /api/appointments/{id}**
 - Description: Delete an appointment by its ID.
 - Authentication Required: Yes
+  
 ## 5. API Testing
 You can use Postman to automate and run tests on your API. To get started:
 - Import the ```AppointMedApiTest.postman_collection.json``` file in Postman
