@@ -77,8 +77,8 @@ You can use this token to access endpoints like retrieving a list of appointment
 **3) Access Protected Endpoints**
 - Create a GET request to access protected endpoints like GET /api/appointments.
 - In the Headers tab, add a new header:
--- Key: Authorization
--- Value: Bearer JWT_Token_String_Here
+    - Key: Authorization
+    - Value: Bearer JWT_Token_String_Here
 - Hit Send to access the appointments data.
 
 
