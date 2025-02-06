@@ -21,7 +21,7 @@ To use the API, you need to first register and log in a user to obtain a JWT tok
 **Register User**
 Endpoint: POST /api/account/register
 Request Body:
-```
+```bash
 {
     "username": "testUser",
     "email": "testuser@example.com",
@@ -29,7 +29,7 @@ Request Body:
 }
 ```
 Response:
-```
+```bash
 {
     "userName": "testUser2",
     "email": "testuser2@example.com",
@@ -39,14 +39,14 @@ Response:
 **Login User**
 Endpoint: POST /api/auth/login
 Request Body:
-```
+```bash
 {
     "username": "testUser",
     "password": "securePassword@123"
 }
 ```
 Response:
-```
+```bash
 {
     "userName": "testUser",
     "email": "testuser@example.com",
@@ -56,7 +56,7 @@ Response:
 ## 2. Using the Authentication Token to Access Protected Endpoints
 Once you have the JWT token from the login response, include it in the Authorization header for all requests to protected endpoints.
 **Example Request with Authorization Header:**
-```
+```bash
 GET /api/appointments
 Authorization: Bearer JWT_Token_String_Here
 ```
@@ -64,21 +64,21 @@ You can use this token to access endpoints like retrieving a list of appointment
 ## 3. Testing the API Endpoints Using Postman
 **1) Register a User**
 - Open Postman and create a POST request.
-- Set the URL to: http://localhost:7159/api/auth/register
+- Set the URL to: ```http://localhost:7159/api/account/register```
 - In the Body tab, select raw and choose JSON as the type.
 - Paste the registration request body and hit Send.
 
 **2) Login and Get JWT Token**
 - Create a new POST request.
-- Set the URL to: http://localhost:7159/api/auth/login
+- Set the URL to: ```http://localhost:7159/api/account/login```
 - In the Body tab, paste the login request body and hit Send.
 - Save the JWT token from the response.
   
 **3) Access Protected Endpoints**
 - Create a GET request to access protected endpoints like GET /api/appointments.
 - In the Headers tab, add a new header:
-    - Key: Authorization
-    - Value: Bearer JWT_Token_String_Here
+    - Key: ```Authorization```
+    - Value: ```Bearer JWT_Token_String_Here```
 - Hit Send to access the appointments data.
 
 ## 4. API Endpoints
@@ -133,6 +133,24 @@ Clone the repository to your local machine:
 3. Restore the dependencies:
    ```bash
    dotnet Restore
+4. Install MS SQL Server
+5. Update the ```api/appsettings.json``` file to configure the ```ConnectionStrings```
+   ```bash
+   "ConnectionStrings": {
+      "DefaultConnection": "Server=localhost;Database=AppointMedDB;User Id=your-username;Password=your-password;"
+}
+```
+6. Install the dotnet-ef tool (if not installed already) to migrate the database.
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+This will create the necessary tables in your SQL Server database according to your models.
+Or you may also use Nuget Package Manager Console (PMC)
+```bash
+Add-Migration InitialCreate
+Update-Database
+```
 4. Run the application:
    ```bash
    dotnet run
