@@ -27,13 +27,13 @@ Request Body:
     "email": "testuser@example.com",
     "password": "securePassword@123"
 }
-
-
 ```
 Response:
 ```
 {
-  "message": "User registration successful"
+    "userName": "testUser2",
+    "email": "testuser2@example.com",
+    "token": "JWT_Token_String_Here"
 }
 ```
 **Login User**
@@ -44,8 +44,42 @@ Request Body:
     "username": "testUser",
     "password": "securePassword@123"
 }
-
 ```
+Response:
+```
+{
+    "userName": "testUser",
+    "email": "testuser@example.com",
+    "token": "JWT_Token_String_Here"
+}
+```
+## 2. Using the Authentication Token to Access Protected Endpoints
+Once you have the JWT token from the login response, include it in the Authorization header for all requests to protected endpoints.
+**Example Request with Authorization Header:**
+```
+GET /api/appointments
+Authorization: Bearer JWT_Token_String_Here
+```
+You can use this token to access endpoints like retrieving a list of appointments, viewing specific appointments, etc.
+## 3. Testing the API Endpoints Using Postman
+**1) Register a User**
+- Open Postman and create a POST request.
+- Set the URL to: http://localhost:7159/api/auth/register
+- In the Body tab, select raw and choose JSON as the type.
+- Paste the registration request body and hit Send.
+**2) Login and Get JWT Token**
+- Create a new POST request.
+- Set the URL to: http://localhost:7159/api/auth/login
+- In the Body tab, paste the login request body and hit Send.
+- Save the JWT token from the response.
+**3) Access Protected Endpoints**
+- Create a GET request to access protected endpoints like GET /api/appointments.
+- In the Headers tab, add a new header:
+-- Key: Authorization
+-- Value: Bearer JWT_Token_String_Here
+- Hit Send to access the appointments data.
+
+
 ## Installation
 1. Clone the repository:
    ```bash
