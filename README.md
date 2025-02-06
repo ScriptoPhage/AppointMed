@@ -81,9 +81,49 @@ You can use this token to access endpoints like retrieving a list of appointment
     - Value: Bearer JWT_Token_String_Here
 - Hit Send to access the appointments data.
 
+## 4. API Endpoints
+Below are the available API endpoints for managing appointments:
 
+**GET /api/appointments**
+- Description: Get all appointments.
+- Authentication Required: Yes
+**GET /api/appointments/{id}**
+- Description: Get a specific appointment by its ID.
+- Authentication Required: Yes
+**POST /api/appointments**
+- Description: Create a new appointment.
+- Request Body:
+```
+{
+  "PatientName": "John Doe",
+  "PatientContactInfo": "+1234567890",
+  "AppointmentDateAndTime": "2025-02-06T10:00:00",
+  "DoctorId": 1
+}
+```
+- Authentication Required: Yes
+**PUT /api/appointments/{id}**
+- Description: Update an existing appointment by its ID.
+- Request Body: Same as POST /api/appointments.
+- Authentication Required: Yes
+**DELETE /api/appointments/{id}**
+- Description: Delete an appointment by its ID.
+- Authentication Required: Yes
+## 5. API Testing
+You can use Postman to automate and run tests on your API. To get started:
+- Import the ```AppointMedApiTest.postman_collection.json``` file in Postman
+- Run Collection ```AppointMedApiTest```.
+Additionally, Postman supports scripting for writing tests directly within the app. For example, you can write basic assertions for the status code or response body.
+
+# Running the API Locally
+To run this API locally, follow the steps below:
+Clone the repository to your local machine:
 ## Installation
 1. Clone the repository:
    ```bash
    git clone https://github.com/ScriptoPhage/AppointMed.git
+2. Navigate to the project directory:
+   ```bash
+   cd api
+3. 
    
