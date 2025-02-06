@@ -130,5 +130,13 @@ Clone the repository to your local machine:
 2. Navigate to the project directory:
    ```bash
    cd api
-3. 
+3. Restore the dependencies:
+   ```bash
+   dotnet Restore
+4. Run the application:
+   ```bash
+   dotnet run
+By default, the API will be available at ```http://localhost:7159```.
+
+
    
