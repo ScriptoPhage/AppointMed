@@ -138,8 +138,8 @@ Clone the repository to your local machine:
    ```bash
    "ConnectionStrings": {
       "DefaultConnection": "Server=localhost;Database=AppointMedDB;User Id=your-username;Password=your-password;"
-}
-```
+    }
+    ```
 6. Install the dotnet-ef tool (if not installed already) to migrate the database.
 ```bash
 dotnet ef migrations add InitialCreate
