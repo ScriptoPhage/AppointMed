@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "5966fc1f-7ecc-4c87-bbc9-c0a7f0b73179",
+		"name": "AppointMedApiTest",
+		"description": "This API provides functionalities for managing medical appointments, including user registration, login, and appointment scheduling. The API is secured with JWT authentication, allowing users to interact with protected endpoints after logging in. This project demonstrates the implementation of a basic appointment system with the ability to create, retrieve, update, and delete appointments.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19606548"
+	},
+	"item": [
+		{
+			"name": "User Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User registration is successful\", function () {\r",
+							"    pm.response.to.have.status(201); // Status code 201 for created\r",
+							"    pm.response.to.have.jsonBody(\"message\", \"User registered successfully\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains user id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser\",\r\n    \"email\": \"testuser@example.com\",\r\n    \"password\": \"securePassword@123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7159/api/account/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7159",
+					"path": [
+						"api",
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User login is successful\", function () {\r",
+							"    pm.response.to.have.status(200); // Status code 200 for OK\r",
+							"    pm.response.to.have.jsonBody(\"token\");\r",
+							"});\r",
+							"\r",
+							"// Save the token to an environment variable\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"authToken\", jsonData.token);\r",
+							"\r",
+							"pm.test(\"Token is present in the response\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.token).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser\",\r\n    \"password\": \"securePassword@123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7159/api/account/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7159",
+					"path": [
+						"api",
+						"account",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book Appointment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Appointment booking is successful\", function () {\r",
+							"    pm.response.to.have.status(201); // Status code 201 for created\r",
+							"    pm.response.to.have.jsonBody(\"message\", \"Appointment booked successfully\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Appointment contains user and doctor details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"patientName\");\r",
+							"    pm.expect(jsonData).to.have.property(\"appointmentDateAndTime\");\r",
+							"    pm.expect(jsonData).to.have.property(\"patientContactInfo\");\r",
+							"    pm.expect(jsonData).to.have.property(\"doctorId\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patientName\": \"Abdur Rahman\",\r\n  \"patientContactInfo\": \"01822222222\",\r\n  \"appointmentDateAndTime\": \"2025-06-06T16:26:30.624Z\",\r\n  \"doctorId\": 3\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7159/api/Appointments",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7159",
+					"path": [
+						"api",
+						"Appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Appointments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Appointments retrieval is successful\", function () {\r",
+							"    pm.response.to.have.status(200); // Status code 200 for OK\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Appointments are returned as an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each appointment has required properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (appointment) {\r",
+							"    pm.expect(appointment).to.have.property(\"patientName\");\r",
+							"    pm.expect(appointment).to.have.property(\"appointmentDateAndTime\");\r",
+							"    pm.expect(appointment).to.have.property(\"patientContactInfo\");\r",
+							"    pm.expect(appointment).to.have.property(\"doctorId\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:7159/api/Appointments",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7159",
+					"path": [
+						"api",
+						"Appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Particular Appointment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Appointment retrieval is successful\", function () {\r",
+							"    pm.response.to.have.status(200); // Status code 200 for OK\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains appointment details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"appointmentId\");\r",
+							"    pm.expect(jsonData.appointmentId).to.eql(20);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:7159/api/Appointments/20",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7159",
+					"path": [
+						"api",
+						"Appointments",
+						"20"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Edge Case (Missing Fields)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Missing required fields returns error\", function () {\r",
+							"    pm.response.to.have.status(400); // Status code 400 for bad request\r",
+							"    pm.response.to.have.jsonBody(\"message\", \"Missing required fields\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patientName\": \"Abdur Rahman\",\r\n  \"patientContactInfo\": \"01822222222\",\r\n  \"doctorId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7159/api/Appointments",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7159",
+					"path": [
+						"api",
+						"Appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Edge Case (Date not in future)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Appointment date is not in the future\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var appointmentDate = new Date(jsonData.appointmentDateAndTime);  // Convert appointmentDate to a Date object\r",
+							"\r",
+							"    // Get current date and time\r",
+							"    var currentDate = new Date();\r",
+							"\r",
+							"    // Assert that the appointment date is not in the future\r",
+							"    pm.expect(appointmentDate).to.be.lessThanOrEqual(currentDate);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patientName\": \"Shakur\",\r\n  \"patientContactInfo\": \"01911111111\",\r\n  \"appointmentDateAndTime\": \"2023-02-06T16:26:30.624Z\",\r\n  \"doctorId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7159/api/Appointments",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7159",
+					"path": [
+						"api",
+						"Appointments"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
