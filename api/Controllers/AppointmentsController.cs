@@ -9,11 +9,13 @@ using api.Data;
 using api.Models;
 using api.Mappers;
 using api.DTOs.Apnt;
+using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AppointmentsController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
