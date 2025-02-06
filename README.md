@@ -67,11 +67,13 @@ You can use this token to access endpoints like retrieving a list of appointment
 - Set the URL to: http://localhost:7159/api/auth/register
 - In the Body tab, select raw and choose JSON as the type.
 - Paste the registration request body and hit Send.
+
 **2) Login and Get JWT Token**
 - Create a new POST request.
 - Set the URL to: http://localhost:7159/api/auth/login
 - In the Body tab, paste the login request body and hit Send.
 - Save the JWT token from the response.
+  
 **3) Access Protected Endpoints**
 - Create a GET request to access protected endpoints like GET /api/appointments.
 - In the Headers tab, add a new header:
