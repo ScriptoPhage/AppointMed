@@ -31,8 +31,8 @@ Request Body:
 Response:
 ```bash
 {
-    "userName": "testUser2",
-    "email": "testuser2@example.com",
+    "userName": "testUser",
+    "email": "testuser@example.com",
     "token": "JWT_Token_String_Here"
 }
 ```
